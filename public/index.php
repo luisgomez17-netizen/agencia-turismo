@@ -1,13 +1,18 @@
 <?php
 
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . "/../app/controllers/HotelController.php";
+require_once __DIR__ . "/../app/controllers/PaqueteController.php";
 
-$db = new Database();
 
-$conexion = $db->conectar();
 
-if ($conexion) {
-    echo "¡Conexión instanciada con éxito";
-} else {
-    echo "Fallo al conectar.";
-}
+
+$controller = new HotelController();
+$controller->index();
+
+$categoriaController = new PaqueteController();
+$categoriaController->index();
+
+
+
+
+

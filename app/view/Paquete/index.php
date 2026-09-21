@@ -2,22 +2,22 @@
 <table border="1">
     <tr>
         <th>ID</th>
-        <th>Nombre </th>
-        <th>Descripcion</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
         <th>Precio</th>
-        <th>Duracion</th>
+        <th>Duración</th>
         <th>Cupos Disponibles</th>
     </tr>
     <?php if (!empty($paquete)): ?>
         <?php foreach ($paquete as $cat): ?>
-        <tr>
-            <td><?= $cat['id'] ?></td>
-            <td><?= $cat['nombre'] ?></td>
-            <td><?= $cat['descripcion'] ?></td>
-            <td><?= $cat['precio'] ?></td>
-            <td><?= $cat['duracion'] ?></td>
-            <td><?= $cat['cuposDisponibles'] ?></td>
-        </tr>
+            <tr>
+                <td><?= $cat['idPaquete'] ?></td>
+                <td><?= $cat['Nombre'] ?></td>
+                <td><?= $cat['Descripcion'] ?></td>
+                <td><?= $cat['Precio'] ?></td>
+                <td><?= $cat['Duracion'] ?></td>
+                <td><?= $cat['cuposDisponibles'] ?></td>
+            </tr>
         <?php endforeach; ?>
     <?php endif; ?>
 </table>
