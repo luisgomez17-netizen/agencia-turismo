@@ -8,8 +8,8 @@
         <th>Duración</th>
         <th>Cupos Disponibles</th>
     </tr>
-    <?php if (!empty($paquete)): ?>
-        <?php foreach ($paquete as $cat): ?>
+    <?php if (!empty($paquetes)): ?>
+        <?php foreach ($paquetes as $cat): ?>
             <tr>
                 <td><?= $cat['idPaquete'] ?></td>
                 <td><?= $cat['Nombre'] ?></td>
@@ -21,3 +21,10 @@
         <?php endforeach; ?>
     <?php endif; ?>
 </table>
+
+
+
+
+<a href="/paquete/crear" class="btn">
+     Crear Nuevo Paquete
+</a>

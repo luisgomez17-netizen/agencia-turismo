@@ -1,25 +1,62 @@
 <?php
 
-require_once __DIR__ . "/../../config/database.php";
+
+require_once __DIR__ . '/../../config/database.php';
 
 class Paquete {
-    private $connection;
+    private $db;
 
-    public function __construct(){
-        $db = new database();
-        $this->connection = $db->connect();
-
+    public function __construct() {
+        $database = new Database();
+        $this->db = $database->connect();
     }
 
     public function getAll() {
-        try{
-            $sql = "SELECT * FROM paquete";
-            $consulta = $this->connection->query($sql);
-            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        $sql = "SELECT * FROM paquete";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function crear($nombre, $descripcion, $precio, $duracion, $cuposDisponibles, $idGuia, $paquete_hotel, $paquete_transporte) {
+        try {
+           
+            $sql = "INSERT INTO paquete (
+                        Nombre, 
+                        Descripcion, 
+                        Precio, 
+                        Duracion, 
+                        cuposDisponibles, 
+                        idGuia, 
+                        paquete_hotel, 
+                        paquete_transporte
+                    ) VALUES (
+                        :nombre, 
+                        :descripcion, 
+                        :precio, 
+                        :duracion, 
+                        :cuposDisponibles, 
+                        :idGuia, 
+                        :paquete_hotel, 
+                        :paquete_transporte
+                    )";
+
+            $stmt = $this->db->prepare($sql);
+
+            $stmt->bindValue(':nombre', $nombre, PDO::PARAM_STR);
+            $stmt->bindValue(':descripcion', $descripcion, PDO::PARAM_STR);
+            $stmt->bindValue(':precio', $precio);
+            $stmt->bindValue(':duracion', $duracion, PDO::PARAM_INT);
+            $stmt->bindValue(':cuposDisponibles', $cuposDisponibles, PDO::PARAM_INT);
+            $stmt->bindValue(':idGuia', !empty($idGuia) ? $idGuia : null, !empty($idGuia) ? PDO::PARAM_INT : PDO::PARAM_NULL);
+            $stmt->bindValue(':paquete_hotel', !empty($paquete_hotel) ? $paquete_hotel : null, !empty($paquete_hotel) ? PDO::PARAM_INT : PDO::PARAM_NULL);
+            $stmt->bindValue(':paquete_transporte', !empty($paquete_transporte) ? $paquete_transporte : null, !empty($paquete_transporte) ? PDO::PARAM_INT : PDO::PARAM_NULL);
+
+            return $stmt->execute();
+
         } catch (PDOException $e) {
-            error_log("Error en paquete::getAll - " . $e->getMessage());
-            return [];
-            
+            echo "<h1>Error de Base de Datos:</h1> " . $e->getMessage();
+            exit();
         }
     }
 }

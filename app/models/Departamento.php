@@ -6,20 +6,18 @@ class Departamento {
     private $connection;
 
     public function __construct(){
-        $db = new database();
+        $db = new Database(); // <-- 'Database' con 'D' mayúscula
         $this->connection = $db->connect();
-
     }
 
     public function getAll() {
-        try{
+        try {
             $sql = "SELECT * FROM departamento";
             $consulta = $this->connection->query($sql);
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            error_log("Error en departamento::getAll - " . $e->getMessage());
+            error_log("Error en Departamento::getAll - " . $e->getMessage());
             return [];
-            
         }
     }
 }

@@ -1,16 +1,23 @@
-<h1>Listado Ciudad</h1>
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Nombre</th>
+<h2>Listado Ciudad</h2>
 
-    </tr>
-    <?php if (!empty($ciudad)): ?>
-        <?php foreach ($ciudad as $cat): ?>
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($ciudades as $ciudad): ?>
             <tr>
-                <td><?= $cat['idCiudad'] ?></td>
-                <td><?= $cat['nombreCiudad'] ?></td>
+                <td><?= $ciudad['idCiudad'] ?></td>
+                <td><?= $ciudad['nombreCiudad'] ?></td>
             </tr>
         <?php endforeach; ?>
-    <?php endif; ?>
+    </tbody>
 </table>
+
+<br>
+<a href="/ciudad/crear" class="btn">
+    Crear Nueva Ciudad
+</a>
