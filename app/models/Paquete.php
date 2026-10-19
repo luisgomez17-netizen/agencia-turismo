@@ -59,4 +59,13 @@ class Paquete {
             exit();
         }
     }
+
+    
+    public function getById($id) {
+    $sql = "SELECT * FROM paquete WHERE idPaquete = ?";
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([$id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 }

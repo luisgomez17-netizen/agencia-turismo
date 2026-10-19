@@ -7,6 +7,7 @@
         <th>Precio</th>
         <th>Duración</th>
         <th>Cupos Disponibles</th>
+        <th>Acciones</th>
     </tr>
     <?php if (!empty($paquetes)): ?>
         <?php foreach ($paquetes as $cat): ?>
@@ -17,6 +18,9 @@
                 <td><?= $cat['Precio'] ?></td>
                 <td><?= $cat['Duracion'] ?></td>
                 <td><?= $cat['cuposDisponibles'] ?></td>
+                <td>
+                    <a href="/paquete/editar?id=11">Editar</a>
+                </td>
             </tr>
         <?php endforeach; ?>
     <?php endif; ?>

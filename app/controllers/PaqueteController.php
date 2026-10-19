@@ -45,4 +45,11 @@ class PaqueteController {
             }
         }
     }
+
+    public function editar(){
+        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+        $modeloPaquete = new paquete();
+        $paquete = $modeloPaquete->getById($id);
+        require_once __DIR__ . '/../view/Paquete/editar.php';
+    }
 }

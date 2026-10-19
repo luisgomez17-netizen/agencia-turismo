@@ -168,5 +168,9 @@ if ($method === 'POST' && $uri === '/paquete/guardar') {
     $paqueteController->guardar();
 }
 
-
+$ruta = parse_url($uri, PHP_URL_PATH);
+if ($ruta === "/paquete/editar" && $method === "GET"){
+    $paquete = new PaqueteController();
+    $paquete->editar();
+}
 ?>
