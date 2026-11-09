@@ -52,4 +52,34 @@ class PaqueteController {
         $paquete = $modeloPaquete->getById($id);
         require_once __DIR__ . '/../view/Paquete/editar.php';
     }
+
+    public function actualizar() {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $idPaquete = $_POST['idPaquete'];
+        $nombre = $_POST['Nombre'];
+        $descripcion = $_POST['Descripcion'];
+        $precio = $_POST['Precio'];
+        $duracion = $_POST['Duracion'];
+        $cuposDisponibles = $_POST['cuposDisponibles'];
+        $idGuia = !empty($_POST['idGuia']) ? (int)$_POST['idGuia'] : null;
+        $paqueteHotel = !empty($_POST['paqueteHotel']) ? (int)$_POST['paqueteHotel'] : null;
+
+        $paqueteModel = new Paquete();
+        $actualizado = $paqueteModel->actualizar(
+            $idPaquete,
+            $nombre,
+            $descripcion,
+            $precio,
+            $duracion,
+            $cuposDisponibles,
+            $idGuia,
+            $paqueteHotel
+        );
+
+        if ($actualizado) {
+            header('Location: /Paquete');
+            exit();
+            }
+        }  
+    }
 }

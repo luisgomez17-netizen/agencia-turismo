@@ -25,7 +25,8 @@
     <label for="paqueteHotel">Paquete Hotel:</label><br>
     <input type="text" id="paqueteHotel" name="paqueteHotel" value="<?= $paquete['paqueteHotel'] ?? '' ?>" required><br><br>
 
-    <button type="submit">Actualizar Paquete</button>
+    <label for="paqueteTransporte">Paquete Transporte:</label><br>
+    <input type="text" id="paqueteTransporte" name="paquete_transporte" value="<?= $paquete['paquete_transporte'] ?? '' ?>" required><br><br>    <button type="submit">Actualizar Paquete</button>
     <a href="/paquete">Cancelar</a>
 </form>
 

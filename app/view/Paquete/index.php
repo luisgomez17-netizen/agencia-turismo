@@ -19,7 +19,7 @@
                 <td><?= $cat['Duracion'] ?></td>
                 <td><?= $cat['cuposDisponibles'] ?></td>
                 <td>
-                    <a href="/paquete/editar?id=11">Editar</a>
+                    <a href="/paquete/editar?id=<?= $cat['idPaquete']; ?>">Editar</a>
                 </td>
             </tr>
         <?php endforeach; ?>
@@ -32,3 +32,4 @@
 <a href="/paquete/crear" class="btn">
      Crear Nuevo Paquete
 </a>
+
