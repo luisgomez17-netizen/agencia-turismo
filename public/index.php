@@ -173,4 +173,28 @@ if ($ruta === "/paquete/editar" && $method === "GET"){
     $paquete = new PaqueteController();
     $paquete->editar();
 }
+
+// Rutas GET para Editar Paquete
+if ($method === 'GET' && strpos($uri, '/paquete/editar') === 0) {
+    $paqueteController = new PaqueteController();
+    $paqueteController->editar();
+}
+
+// Rutas GET para Eliminar Paquete
+if ($method === 'GET' && strpos($uri, '/paquete/eliminar') === 0) {
+    $paqueteController = new PaqueteController();
+    $paqueteController->eliminar();
+}
+
+// Ruta GET para mostrar el formulario de edición con los datos actuales
+if ($method === 'GET' && strpos($uri, '/paquete/editar') === 0) {
+    $paqueteController = new PaqueteController();
+    $paqueteController->editar();
+}
+
+// Ruta POST para procesar y guardar los cambios en la base de datos
+if ($method === 'POST' && strpos($uri, '/paquete/actualizar') === 0) {
+    $paqueteController = new PaqueteController();
+    $paqueteController->actualizar();
+}
 ?>

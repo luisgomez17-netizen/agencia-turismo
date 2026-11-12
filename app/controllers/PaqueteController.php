@@ -46,40 +46,66 @@ class PaqueteController {
         }
     }
 
-    public function editar(){
-        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-        $modeloPaquete = new paquete();
-        $paquete = $modeloPaquete->getById($id);
-        require_once __DIR__ . '/../view/Paquete/editar.php';
-    }
+    public function editar()
+{
+    $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
-    public function actualizar() {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $idPaquete = $_POST['idPaquete'];
-        $nombre = $_POST['Nombre'];
-        $descripcion = $_POST['Descripcion'];
-        $precio = $_POST['Precio'];
-        $duracion = $_POST['Duracion'];
-        $cuposDisponibles = $_POST['cuposDisponibles'];
-        $idGuia = !empty($_POST['idGuia']) ? (int)$_POST['idGuia'] : null;
-        $paqueteHotel = !empty($_POST['paqueteHotel']) ? (int)$_POST['paqueteHotel'] : null;
-
+    if ($id) {
         $paqueteModel = new Paquete();
-        $actualizado = $paqueteModel->actualizar(
-            $idPaquete,
-            $nombre,
-            $descripcion,
-            $precio,
-            $duracion,
-            $cuposDisponibles,
-            $idGuia,
-            $paqueteHotel
-        );
+        // Debes tener un método en tu modelo que busque por ID (ej. obtenerPorId)
+        $paquete = $paqueteModel->obtenerPorId($id);
 
-        if ($actualizado) {
-            header('Location: /Paquete');
-            exit();
-            }
-        }  
+        // Aquí cargas tu vista de edición existente
+        require_once __DIR__ . '/../view/Paquete/editar.php';
+    } else {
+        echo "ID no válido para editar.";
     }
+}
+
+   public function actualizar()
+{
+    // Recibe los datos enviados por POST desde el formulario de edición
+    $id = filter_input(INPUT_POST, 'idPaquete', FILTER_VALIDATE_INT);
+    $nombre = $_POST['Nombre'] ?? '';
+    $descripcion = $_POST['Descripcion'] ?? '';
+    $precio = $_POST['Precio'] ?? 0;
+    $duracion = $_POST['Duracion'] ?? 0;
+    $cupos = $_POST['cuposDisponibles'] ?? 0;
+
+    if ($id) {
+        $paqueteModel = new Paquete();
+        // Método en tu modelo que ejecute el UPDATE en la BD
+        $resultado = $paqueteModel->actualizar($id, $nombre, $descripcion, $precio, $duracion, $cupos);
+
+        if ($resultado) {
+            header("Location: /paquete");
+            exit();
+        } else {
+            echo "Error al actualizar el registro.";
+        }
+    }
+}
+
+   public function eliminar()
+{
+    // Capturamos el ID por GET
+    $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+
+    // PRUEBA DE DEPURACIÓN: Descomenta la siguiente línea para ver si llega el ID
+    // var_dump($id); die();
+
+    if ($id) {
+        $paqueteModel = new Paquete();
+        $resultado = $paqueteModel->eliminar($id);
+
+        if ($resultado) {
+            header("Location: /paquete"); // Ajusta la ruta si es necesario
+            exit();
+        } else {
+            echo "El modelo retornó false (la consulta SQL falló).";
+        }
+    } else {
+        echo "El ID llegó vacío o no es un número válido.";
+    }
+}
 }
