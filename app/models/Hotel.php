@@ -22,4 +22,21 @@ class Hotel {
             
         }
     }
+
+    public function crear($nombre, $direccion, $telefono, $email, $estrellas) {
+        try {
+            $sql = "INSERT INTO hotel (Nombre, Direccion, Telefono, Email, Estrellas) 
+                    VALUES (:nombre, :direccion, :telefono, :email, :estrellas)";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(':nombre', $nombre);
+            $stmt->bindValue(':direccion', $direccion);
+            $stmt->bindValue(':telefono', $telefono);
+            $stmt->bindValue(':email', $email);
+            $stmt->bindValue(':estrellas', $estrellas);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            error_log("Error en hotel::crear - " . $e->getMessage());
+            return false;
+        }
+    }
 }

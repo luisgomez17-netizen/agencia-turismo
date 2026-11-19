@@ -158,6 +158,77 @@ if ($method === 'POST' && $uri === '/ciudad/guardar') {
     $ciudadController->guardar();
 }
 
+if ($method === 'POST' && $uri === '/departamento/guardar') {
+    $departamentoController = new DepartamentoController();
+    $departamentoController->guardar();
+}
+
+if ($method === 'POST' && $uri === '/empresa/guardar') {
+    $empresaController = new EmpresaController();
+    $empresaController->guardar();
+}
+
+if ($method === 'POST' && $uri === '/guia-turi/guardar') {
+    $guiaTuriController = new GuiaTuriController();
+    $guiaTuriController->guardar();
+}
+
+if ($method === 'POST' && $uri === '/hotel/guardar') {
+    $hotelController = new HotelController();
+    $hotelController->guardar();
+}
+
+if ($method === 'POST' && $uri === '/pago/guardar') {
+    $pagoController = new PagoController();
+    $pagoController->guardar();
+}
+
+if ($method === 'POST' && $uri === '/reserva/guardar') {
+    $reservaController = new ReservaController();
+    $reservaController->guardar();
+}
+
+if ($method === 'POST' && $uri === '/sexo/guardar') {
+    $sexoController = new SexoController();
+    $sexoController->guardar();
+}
+
+if ($method === 'POST' && $uri === '/tipo-documento/guardar') {
+    $tipoDocController = new TipoDocController();
+    $tipoDocController->guardar();
+}
+
+if ($method === 'POST' && $uri === '/tipo-guia/guardar') {
+    $tipoGuiaController = new TipoGuiaController();
+    $tipoGuiaController->guardar();
+}
+
+if ($method === 'POST' && $uri === '/tipo-pago/guardar') {
+    $tipoPagoController = new TipoPagoController();
+    $tipoPagoController->guardar();
+}
+
+if ($method === 'POST' && $uri === '/tipo-sangre/guardar') {
+    $tipoSangreController = new TipoSangreController();
+    $tipoSangreController->guardar();
+}
+
+if ($method === 'POST' && $uri === '/tipo-Transporte/guardar') {
+    $tipoTransporteController = new TipoTransporteController();
+    $tipoTransporteController->guardar();
+}
+
+if ($method === 'POST' && $uri === '/transporte/guardar') {
+    $transporteController = new TransporteController();
+    $transporteController->guardar();
+}
+
+if ($method === 'POST' && $uri === '/venta/guardar') {
+    $ventaController = new VentaController();
+    $ventaController->guardar();
+}
+
+
 if ($method === 'POST' && $uri === '/cliente/guardar') {
     $clienteController = new ClienteController();
     $clienteController->guardar();
@@ -174,11 +245,17 @@ if ($ruta === "/paquete/editar" && $method === "GET"){
     $paquete->editar();
 }
 
-// Rutas GET para Editar Paquete
-if ($method === 'GET' && strpos($uri, '/paquete/editar') === 0) {
-    $paqueteController = new PaqueteController();
-    $paqueteController->editar();
+// Rutas GET para Editar 
+if ($method === 'GET' && strpos($uri, '/hotel/editar') === 0) {
+    $hotelController = new HotelController();
+    $hotelController->editar();
 }
+
+if ($method === 'POST' && strpos($uri, '/paquete/actualizar') === 0) {
+    $paqueteController = new PaqueteController();
+    $paqueteController->actualizar();
+}
+
 
 // Rutas GET para Eliminar Paquete
 if ($method === 'GET' && strpos($uri, '/paquete/eliminar') === 0) {
