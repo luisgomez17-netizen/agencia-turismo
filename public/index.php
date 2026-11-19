@@ -245,7 +245,7 @@ if ($ruta === "/paquete/editar" && $method === "GET"){
     $paquete->editar();
 }
 
-// Rutas GET para Editar Paquete
+// Rutas GET para Editar 
 if ($method === 'GET' && strpos($uri, '/hotel/editar') === 0) {
     $hotelController = new HotelController();
     $hotelController->editar();
