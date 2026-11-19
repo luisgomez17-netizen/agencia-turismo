@@ -274,4 +274,44 @@ if ($method === 'POST' && strpos($uri, '/paquete/actualizar') === 0) {
     $paqueteController = new PaqueteController();
     $paqueteController->actualizar();
 }
+
+$method = $_SERVER['REQUEST_METHOD'];
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+// Opcional: si el proyecto está en una subcarpeta, normaliza aquí el prefijo base
+
+switch ($uri) {
+    case '/paquete/crear':
+        if ($method === 'GET') {
+            $controller = new PaqueteController();
+            $controller->crear(); // Mostrar formulario
+        } elseif ($method === 'POST') {
+            $controller = new PaqueteController();
+            $controller->guardar(); // Procesar formulario de creación
+        }
+        break;
+
+    case '/paquete/editar':
+        if ($method === 'GET') {
+            $controller = new PaqueteController();
+            $controller->editar(); // Mostrar formulario con datos
+        } elseif ($method === 'POST') {
+            $controller = new PaqueteController();
+            $controller->actualizar(); // Guardar cambios
+        }
+        break;
+
+    case '/paquete/eliminar':
+        if ($method === 'POST') {
+            $controller = new PaqueteController();
+            $controller->eliminar();
+        }
+        break;
+
+    default:
+        http_response_code(404);
+        echo "Ruta no encontrada";
+        break;
+}
+
 ?>
