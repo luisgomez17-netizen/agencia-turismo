@@ -1,8 +1,8 @@
 <?php
 
 $rutas = [
-
     "GET" => [
+        "/" => ["PaqueteController", "index"],
 
         "/paquete" => ["PaqueteController", "index"],
         "/paquete/crear" => ["PaqueteController", "crear"],
@@ -26,11 +26,9 @@ $rutas = [
         "/compras" => ["CompraController", "index"],
         "/compras/crear" => ["CompraController", "crear"],
         "/compras/editar" => ["CompraController", "editar"]
-
     ],
 
     "POST" => [
-
         "/paquete/crear" => ["PaqueteController", "guardar"],
         "/paquete/actualizar" => ["PaqueteController", "actualizar"],
 
@@ -47,9 +45,7 @@ $rutas = [
         "/compras/crear" => ["CompraController", "guardar"],
         "/compras/actualizar" => ["CompraController", "actualizar"],
         "/compras/eliminar" => ["CompraController", "eliminar"]
-
     ]
-
 ];
+
 return $rutas;
-?>

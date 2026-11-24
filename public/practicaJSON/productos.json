@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "nombre": "Mouse inalámbrico",
+    "precio": 45000,
+    "stock": 15,
+    "disponible": true
+  },
+  {
+    "id": 2,
+    "nombre": "Teclado mecánico",
+    "precio": 165000,
+    "stock": 8,
+    "disponible": true
+  },
+  {
+    "id": 3,
+    "nombre": "Audífonos USB",
+    "precio": 85000,
+    "stock": 12,
+    "disponible": true
+  },
+  {
+    "id": 4,
+    "nombre": "Silla ergonómica",
+    "precio": 540000,
+    "stock": 4,
+    "disponible": true
+  }
+]

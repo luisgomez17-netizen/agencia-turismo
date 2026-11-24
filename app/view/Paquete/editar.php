@@ -1,24 +1,51 @@
-<form action="/paquete/actualizar" method="POST">
-    <!-- Campo oculto indispensable para enviar el ID -->
-    <input type="hidden" name="idPaquete" value="<?= $paquete['idPaquete']; ?>">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Paquete</title>
+</head>
+<body>
+    <h2>Editar Paquete</h2>
 
-    <label>Nombre:</label>
-    <input type="text" name="Nombre" value="<?= $paquete['Nombre']; ?>" required>
+    <form action="/agencia-turismo/public/paquete/actualizar" method="POST">
+        <input type="hidden" name="idPaquete" value="<?= htmlspecialchars($paquete['idPaquete'] ?? '') ?>">
 
-    <label>Descripción:</label>
-    <input type="text" name="Descripcion" value="<?= $paquete['Descripcion']; ?>" required>
+        <label>Nombre:</label><br>
+        <input type="text" name="Nombre" value="<?= htmlspecialchars($paquete['Nombre'] ?? '') ?>" required>
+        <br><br>
 
-    <label>Precio:</label>
-    <input type="number" step="0.01" name="Precio" value="<?= $paquete['Precio']; ?>" required>
+        <label>Descripción:</label><br>
+        <input type="text" name="Descripcion" value="<?= htmlspecialchars($paquete['Descripcion'] ?? '') ?>" required>
+        <br><br>
 
-    <label>Duración:</label>
-    <input type="number" name="Duracion" value="<?= $paquete['Duracion']; ?>" required>
+        <label>Precio:</label><br>
+        <input type="number" step="0.01" name="Precio" value="<?= htmlspecialchars($paquete['Precio'] ?? '') ?>" required>
+        <br><br>
 
-    <label>Cupos Disponibles:</label>
-    <input type="number" name="cuposDisponibles" value="<?= $paquete['cuposDisponibles']; ?>" required>
+        <label>Duración (días):</label><br>
+        <input type="number" name="Duracion" value="<?= htmlspecialchars($paquete['Duracion'] ?? '') ?>" required>
+        <br><br>
 
-    <button type="submit">Actualizar Paquete</button>
-</form>
+        <label>Cupos Disponibles:</label><br>
+        <input type="number" name="cuposDisponibles" value="<?= htmlspecialchars($paquete['cuposDisponibles'] ?? '') ?>" required>
+        <br><br>
 
+        <label>ID Guía:</label><br>
+        <input type="number" name="idGuia" value="<?= htmlspecialchars($paquete['idGuia'] ?? '') ?>">
+        <br><br>
+
+        <label>ID Hotel:</label><br>
+        <input type="number" name="paquete_hotel" value="<?= htmlspecialchars($paquete['paquete_hotel'] ?? '') ?>">
+        <br><br>
+
+        <label>ID Transporte:</label><br>
+        <input type="number" name="paquete_transporte" value="<?= htmlspecialchars($paquete['paquete_transporte'] ?? '') ?>">
+        <br><br>
+
+        <button type="submit">Actualizar Paquete</button>
+        <a href="/agencia-turismo/public/paquete">Cancelar</a>
+    </form>
+</body>
+</html>
 
 

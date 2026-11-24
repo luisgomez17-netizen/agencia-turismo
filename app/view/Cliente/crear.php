@@ -1,29 +1,6 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Crear Cliente</title>
-</head>
 <body>
-
-    <h1>Crear Cliente</h1>
-
-    <form action="/cliente/guardar" method="POST">
-        <label>Nombre:</label><br>
-        <input type="text" name="Nombre" required>
-        <br><br>
-
-        <label>Apellido:</label><br>
-        <input type="text" name="Apellido" required>
-        <br><br>
-
-        <label>ID Tipo Documento:</label><br>
-        <input type="number" name="idTipoDoc" required>
-        <br><br>
-
-        <label>Número Documento:</label><br>
-        <input type="text" name="numeroDocumento" required>
-        <br><br>
+    <form action="/agencia-turismo/public/clientes/crear" method="POST">
+        <!-- Mantén aquí los campos superiores de tu formulario (nombre, apellido, tipo doc, num doc, etc.) -->
 
         <label>Correo Electrónico:</label><br>
         <input type="email" name="Correo" required>
@@ -42,8 +19,7 @@
         <br><br>
 
         <button type="submit">Guardar Cliente</button>
-        <a href="/cliente">Cancelar</a>
+        <a href="/agencia-turismo/public/clientes">Cancelar</a>
     </form>
-
 </body>
-</html>>
+</html>
