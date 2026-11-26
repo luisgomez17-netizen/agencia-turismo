@@ -18,261 +18,169 @@ require_once __DIR__ . '/../app/controllers/TipoTransporteController.php';
 require_once __DIR__ . '/../app/controllers/TransporteController.php';
 require_once __DIR__ . '/../app/controllers/VentaController.php';
 
-$method = $_SERVER['REQUEST_METHOD'];
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$method =$_SERVER['REQUEST_METHOD'];
+$uri =$_SERVER['REQUEST_URI'];
+$ruta = parse_url($uri, PHP_URL_PATH) ?: '/';
+
+// Quita /agencia-turismo/public para que el switch evalúe rutas limpias como /paquete
+$basePath = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
+if ($basePath !== '/' && $basePath !== '' && strpos($ruta, $basePath) === 0) {$ruta = substr($ruta, strlen($basePath));
+}
+$ruta = '/' . trim($ruta, '/');
+if ($ruta !== '/') {
+    $ruta = rtrim($ruta, '/');
+}
+
+// Ejecuta acciones POST o redirecciones antes de enviar HTML
+ob_start();
+$rutaEncontrada = true;
+
+switch ($ruta) {
+    case '/':
+        if ($method === 'GET') {
+            $controller = new PaqueteController();$controller->index();
+        } else {
+            $rutaEncontrada = false;
+        }
+        break;
+
+    /* --- PAQUETES --- */
+    case '/paquete':
+        if ($method === 'GET') {
+            $controller = new PaqueteController();$controller->index();
+        } elseif ($method === 'POST') {
+            $controller = new PaqueteController();$controller->guardar();
+        } else {
+            $rutaEncontrada = false;
+        }
+        break;
+
+    case '/paquete/crear':
+        if ($method === 'GET') {
+            $controller = new PaqueteController();$controller->crear();
+        } elseif ($method === 'POST') {
+            $controller = new PaqueteController();$controller->guardar();
+        } else {
+            $rutaEncontrada = false;
+        }
+        break;
+
+    case '/paquete/editar':
+        if ($method === 'GET') {
+            $controller = new PaqueteController();$controller->editar();
+        } else {
+            $rutaEncontrada = false;
+        }
+        break;
+
+    case '/paquete/actualizar':
+        if ($method === 'POST') {
+            $controller = new PaqueteController();$controller->actualizar();
+        } else {
+            $rutaEncontrada = false;
+        }
+        break;
+
+    case '/paquete/eliminar':
+        if ($method === 'GET' \vert{}\vert{}$method === 'POST') {
+            $controller = new PaqueteController();$controller->eliminar();
+        } else {
+            $rutaEncontrada = false;
+        }
+        break;
+
+    /* --- CLIENTES --- */
+    case '/clientes':
+        if ($method === 'GET') {
+            $controller = new ClienteController();$controller->index();
+        } elseif ($method === 'POST') {
+            $controller = new ClienteController();$controller->guardar();
+        } else {
+            $rutaEncontrada = false;
+        }
+        break;
+
+    case '/clientes/crear':
+        if ($method === 'GET') {
+            $controller = new ClienteController();$controller->crear();
+        } else {
+            $rutaEncontrada = false;
+        }
+        break;
+
+    /* --- HOTELES --- */
+    case '/hoteles':
+        if ($method === 'GET') {
+            $controller = new HotelController();$controller->index();
+        } elseif ($method === 'POST') {
+            $controller = new HotelController();$controller->guardar();
+        } else {
+            $rutaEncontrada = false;
+        }
+        break;
+
+    /* --- TRANSPORTE --- */
+    case '/transporte':
+        if ($method === 'GET') {
+            $controller = new TransporteController();$controller->index();
+        } elseif ($method === 'POST') {
+            $controller = new TransporteController();$controller->guardar();
+        } else {
+            $rutaEncontrada = false;
+        }
+        break;
+
+    /* --- RESERVAS --- */
+    case '/reservas':
+        if ($method === 'GET') {
+            $controller = new ReservaController();$controller->index();
+        } elseif ($method === 'POST') {
+            $controller = new ReservaController();$controller->guardar();
+        } else {
+            $rutaEncontrada = false;
+        }
+        break;
+
+    /* --- VENTAS --- */
+    case '/ventas':
+        if ($method === 'GET') {
+            $controller = new VentaController();$controller->index();
+        } elseif ($method === 'POST') {
+            $controller = new VentaController();$controller->guardar();
+        } else {
+            $rutaEncontrada = false;
+        }
+        break;
+
+    default:
+        $rutaEncontrada = false;
+        break;
+}
+
+$contenidoVista = ob_get_clean();
+
+if (!$rutaEncontrada) {
+    http_response_code(404);
+    $contenidoVista = "Ruta no encontrada";
+}
 ?>
-
-<nav>
-    <a href="/ciudad">Ciudad</a> |  
-    <a href="/cliente">Cliente</a> | 
-    <a href="/departamento">Departamento</a> |
-    <a href="/empresa">Empresa</a> | 
-    <a href="/guia-turi">Guia Turi</a> |
-    <a href="/hotel">Hotel</a> | 
-    <a href="/pago">Pago</a> |
-    <a href="/paquete">Paquete</a> |
-    <a href="/reserva">Reserva</a> |
-    <a href="/sexo">Sexo</a> |
-    <a href="/tipo-documento">Tipo Documento</a> |
-    <a href="/tipo-guia">Tipo Guia</a> |
-    <a href="/tipo-pago">Tipo Pago</a> |
-    <a href="/tipo-sangre">Tipo de Sangre</a> |
-    <a href="/tipo-Transporte">Tipos Transporte</a> |
-    <a href="/transporte">Transporte</a> |
-    <a href="/venta">Venta</a> |
-</nav>
-
-<hr>
-
-<?php
-
-if ($method === 'GET' && $uri === '/ciudad') {
-    $ciudadController = new CiudadController();
-    $ciudadController->index();
-}
-
-if ($method === 'GET' && $uri === '/cliente') {
-    $clienteController = new ClienteController();
-    $clienteController->index();
-}
-
-if ($method === 'GET' && $uri === '/departamento') {
-    $departamentoController = new DepartamentoController();
-    $departamentoController->index();
-}
-
-
-if ($method === 'GET' && $uri === '/empresa') {
-    $empresaController = new EmpresaController();
-    $empresaController->index();
-}
-
-if ($method === 'GET' && $uri === '/guia-turi') {
-    $guiaTuriController = new GuiaTuriController();
-    $guiaTuriController->index();
-}
-
-if ($method === 'GET' && $uri === '/hotel') {
-    $hotelController = new HotelController();
-    $hotelController->index();
-}
-
-if ($method === 'GET' && $uri === '/pago') {
-    $pagoController = new PagoController();
-    $pagoController->index();
-}
-
-if ($method === 'GET' && $uri === '/paquete') {
-    $paqueteController = new PaqueteController();
-    $paqueteController->index();
-}
-
-if ($method === 'GET' && $uri === '/reserva') {
-    $reservaController = new ReservaController();
-    $reservaController->index();
-}
-
-if ($method === 'GET' && $uri === '/sexo') {
-    $sexoController = new SexoController();
-    $sexoController->index();
-}
-
-if ($method === 'GET' && $uri === '/tipo-documento') {
-    $tipoDocController = new TipoDocController();
-    $tipoDocController->index();
-}
-
-
-if ($method === 'GET' && $uri === '/tipo-guia') {
-    $tipoGuiaController = new TipoGuiaController();
-    $tipoGuiaController->index();
-}
-
-if ($method === 'GET' && $uri === '/tipo-pago') {
-    $tipoPagoController = new TipoPagoController();
-    $tipoPagoController->index();
-}
-
-if ($method === 'GET' && $uri === '/tipo-sangre') {
-    $tipoSangreController = new TipoSangreController();
-    $tipoSangreController->index();
-}
-
-if ($method === 'GET' && $uri === '/tipo-Transporte') {
-    $tipoTransporteController = new TipoTransporteController();
-    $tipoTransporteController->index();
-}
-
-if ($method === 'GET' && $uri === '/transporte') {
-    $transporteController = new TransporteController();
-    $transporteController->index();
-}
-
-if ($method === 'GET' && $uri === '/venta') {
-    $ventaController = new VentaController();
-    $ventaController->index();
-}
-
-
-// MEtodo GET
-
-if ($method === 'GET' && $uri === '/ciudad/crear') {
-    $ciudadController = new CiudadController();
-    $ciudadController->crear();
-}
-
-if ($method === 'GET' && $uri === '/cliente/crear') {
-    $clienteController = new ClienteController();
-    $clienteController->crear();
-}
-
-if ($method === 'GET' && $uri === '/paquete/crear') {
-    $paqueteController = new PaqueteController();
-    $paqueteController->crear();
-}
-
-// Metodo POST
-
-if ($method === 'POST' && $uri === '/ciudad/guardar') {
-    $ciudadController = new CiudadController();
-    $ciudadController->guardar();
-}
-
-if ($method === 'POST' && $uri === '/departamento/guardar') {
-    $departamentoController = new DepartamentoController();
-    $departamentoController->guardar();
-}
-
-if ($method === 'POST' && $uri === '/empresa/guardar') {
-    $empresaController = new EmpresaController();
-    $empresaController->guardar();
-}
-
-if ($method === 'POST' && $uri === '/guia-turi/guardar') {
-    $guiaTuriController = new GuiaTuriController();
-    $guiaTuriController->guardar();
-}
-
-if ($method === 'POST' && $uri === '/hotel/guardar') {
-    $hotelController = new HotelController();
-    $hotelController->guardar();
-}
-
-if ($method === 'POST' && $uri === '/pago/guardar') {
-    $pagoController = new PagoController();
-    $pagoController->guardar();
-}
-
-if ($method === 'POST' && $uri === '/reserva/guardar') {
-    $reservaController = new ReservaController();
-    $reservaController->guardar();
-}
-
-if ($method === 'POST' && $uri === '/sexo/guardar') {
-    $sexoController = new SexoController();
-    $sexoController->guardar();
-}
-
-if ($method === 'POST' && $uri === '/tipo-documento/guardar') {
-    $tipoDocController = new TipoDocController();
-    $tipoDocController->guardar();
-}
-
-if ($method === 'POST' && $uri === '/tipo-guia/guardar') {
-    $tipoGuiaController = new TipoGuiaController();
-    $tipoGuiaController->guardar();
-}
-
-if ($method === 'POST' && $uri === '/tipo-pago/guardar') {
-    $tipoPagoController = new TipoPagoController();
-    $tipoPagoController->guardar();
-}
-
-if ($method === 'POST' && $uri === '/tipo-sangre/guardar') {
-    $tipoSangreController = new TipoSangreController();
-    $tipoSangreController->guardar();
-}
-
-if ($method === 'POST' && $uri === '/tipo-Transporte/guardar') {
-    $tipoTransporteController = new TipoTransporteController();
-    $tipoTransporteController->guardar();
-}
-
-if ($method === 'POST' && $uri === '/transporte/guardar') {
-    $transporteController = new TransporteController();
-    $transporteController->guardar();
-}
-
-if ($method === 'POST' && $uri === '/venta/guardar') {
-    $ventaController = new VentaController();
-    $ventaController->guardar();
-}
-
-
-if ($method === 'POST' && $uri === '/cliente/guardar') {
-    $clienteController = new ClienteController();
-    $clienteController->guardar();
-}
-
-if ($method === 'POST' && $uri === '/paquete/guardar') {
-    $paqueteController = new PaqueteController();
-    $paqueteController->guardar();
-}
-
-$ruta = parse_url($uri, PHP_URL_PATH);
-if ($ruta === "/paquete/editar" && $method === "GET"){
-    $paquete = new PaqueteController();
-    $paquete->editar();
-}
-
-// Rutas GET para Editar 
-if ($method === 'GET' && strpos($uri, '/hotel/editar') === 0) {
-    $hotelController = new HotelController();
-    $hotelController->editar();
-}
-
-if ($method === 'POST' && strpos($uri, '/paquete/actualizar') === 0) {
-    $paqueteController = new PaqueteController();
-    $paqueteController->actualizar();
-}
-
-
-// Rutas GET para Eliminar Paquete
-if ($method === 'GET' && strpos($uri, '/paquete/eliminar') === 0) {
-    $paqueteController = new PaqueteController();
-    $paqueteController->eliminar();
-}
-
-// Ruta GET para mostrar el formulario de edición con los datos actuales
-if ($method === 'GET' && strpos($uri, '/paquete/editar') === 0) {
-    $paqueteController = new PaqueteController();
-    $paqueteController->editar();
-}
-
-// Ruta POST para procesar y guardar los cambios en la base de datos
-if ($method === 'POST' && strpos($uri, '/paquete/actualizar') === 0) {
-    $paqueteController = new PaqueteController();
-    $paqueteController->actualizar();
-}
-
-?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agencia de Turismo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/agencia-turismo/public/paquete">Agencia Turismo</a>
+            <div class="d-flex flex-wrap gap-2">
+                <a href="/agencia-turismo/public/paquete" class="btn btn-outline-light btn-sm">Paquetes</a>
+                <a href="/agencia-turismo/public/paquete/crear" class="btn btn-primary btn-sm">Crear Paquete</a>
+                <a href="/agencia-turismo/public/clientes" class="btn btn-outline-light btn-sm">Clientes</a>
+                <a href="/agencia-turismo/public/hoteles" class="btn btn-outline-light btn-sm">Hoteles</a>
+                <a href="/agencia-turismo/public/transporte" class="btn btn-outline-light btn-sm">Transporte</a>
+                <a href="/agencia-turismo/public/reservas" class="btn btn-outline-light btn-sm">Reservas</a>
+                <a href="/agencia-turismo/public/ventas" class="btn btn-outline-light btn-sm">Ventas</a>

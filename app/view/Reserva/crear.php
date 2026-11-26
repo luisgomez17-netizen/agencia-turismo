@@ -1,44 +1,46 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Crear Reserva</title>
-</head>
-<body>
+<div class="app-card p-4">
+  <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+    <h2 class="h4 fw-bold mb-0">Crear Nueva Reserva</h2>
+    <a href="/agencia-turismo/public/reservas" class="btn btn-secondary btn-sm">
+      <i class="bi bi-arrow-left me-1"></i> Volver
+    </a>
+  </div>
 
-<h1>Crear Reserva</h1>
+  <form action="/agencia-turismo/public/reservas/crear" method="POST">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label for="idCliente" class="form-label fw-semibold">ID Cliente</label>
+        <input type="number" id="idCliente" name="idCliente" class="form-control" required>
+      </div>
 
-<form action="/reserva/guardar" method="POST">
+      <div class="col-md-6">
+        <label for="idPaquete" class="form-label fw-semibold">ID Paquete</label>
+        <input type="number" id="idPaquete" name="idPaquete" class="form-control" required>
+      </div>
 
-    <label>ID Cliente:</label>
-    <input type="number" name="idCliente" required>
+      <div class="col-md-4">
+        <label for="Fecha" class="form-label fw-semibold">Fecha</label>
+        <input type="date" id="Fecha" name="Fecha" class="form-control" required>
+      </div>
 
-    <br><br>
+      <div class="col-md-4">
+        <label for="CantidadPersonas" class="form-label fw-semibold">Cantidad de Personas</label>
+        <input type="number" min="1" id="CantidadPersonas" name="CantidadPersonas" class="form-control" required>
+      </div>
 
-    <label>ID Paquete:</label>
-    <input type="number" name="idPaquete" required>
+      <div class="col-md-4">
+        <label for="Estado" class="form-label fw-semibold">Estado</label>
+        <input type="text" id="Estado" name="Estado" class="form-control" value="Confirmada" required>
+      </div>
+    </div>
 
-    <br><br>
-
-    <label>Fecha:</label>
-    <input type="date" name="Fecha" required>
-
-    <br><br>
-
-    <label>Cantidad de Personas:</label>
-    <input type="number" name="CantidadPersonas" required>
-
-    <br><br>
-
-    <label>Estado:</label>
-    <input type="text" name="Estado" required>
-
-    <br><br>
-
-    <button type="submit">Guardar Reserva</button>
-    <a href="/reserva">Cancelar</a>
-
-</form>
-
-</body>
-</html>
+    <div class="d-flex gap-2 mt-4 pt-2">
+      <button type="submit" class="btn btn-primary">
+        <i class="bi bi-check-lg me-1"></i> Guardar Reserva
+      </button>
+      <a href="/agencia-turismo/public/reservas" class="btn btn-outline-secondary">
+        Cancelar
+      </a>
+    </div>
+  </form>
+</div>

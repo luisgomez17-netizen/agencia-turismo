@@ -1,51 +1,76 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Editar Paquete</title>
-</head>
-<body>
-    <h2>Editar Paquete</h2>
+<div class="app-card p-4">
+  <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+    <h2 class="h4 fw-bold mb-0">Editar Paquete</h2>
+    <a href="/agencia-turismo/public/paquete" class="btn btn-secondary btn-sm">
+      <i class="bi bi-arrow-left me-1"></i> Cancelar
+    </a>
+  </div>
 
-    <form action="/agencia-turismo/public/paquete/actualizar" method="POST">
-        <input type="hidden" name="idPaquete" value="<?= htmlspecialchars($paquete['idPaquete'] ?? '') ?>">
+  <form action="/agencia-turismo/public/paquete/actualizar" method="POST">
+    <input type="hidden" name="idPaquete" value="<?= htmlspecialchars((string)($paquete['idPaquete'] ?? '')) ?>">
 
-        <label>Nombre:</label><br>
-        <input type="text" name="Nombre" value="<?= htmlspecialchars($paquete['Nombre'] ?? '') ?>" required>
-        <br><br>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">Nombre:</label>
+        <input type="text" name="Nombre" class="form-control"
+               value="<?= htmlspecialchars((string)($paquete['Nombre'] ?? '')) ?>" required>
+      </div>
 
-        <label>Descripción:</label><br>
-        <input type="text" name="Descripcion" value="<?= htmlspecialchars($paquete['Descripcion'] ?? '') ?>" required>
-        <br><br>
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">Descripción:</label>
+        <input type="text" name="Descripcion" class="form-control"
+               value="<?= htmlspecialchars((string)($paquete['Descripcion'] ?? '')) ?>" required>
+      </div>
 
-        <label>Precio:</label><br>
-        <input type="number" step="0.01" name="Precio" value="<?= htmlspecialchars($paquete['Precio'] ?? '') ?>" required>
-        <br><br>
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">Precio:</label>
+        <div class="input-group">
+          <span class="input-group-text">$</span>
+          <input type="number" step="0.01" name="Precio" class="form-control"
+                 value="<?= htmlspecialchars((string)($paquete['Precio'] ?? '')) ?>" required>
+        </div>
+      </div>
 
-        <label>Duración (días):</label><br>
-        <input type="number" name="Duracion" value="<?= htmlspecialchars($paquete['Duracion'] ?? '') ?>" required>
-        <br><br>
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">Duración (días):</label>
+        <input type="number" name="Duracion" class="form-control"
+               value="<?= htmlspecialchars((string)($paquete['Duracion'] ?? '')) ?>" required>
+      </div>
 
-        <label>Cupos Disponibles:</label><br>
-        <input type="number" name="cuposDisponibles" value="<?= htmlspecialchars($paquete['cuposDisponibles'] ?? '') ?>" required>
-        <br><br>
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">Cupos Disponibles:</label>
+        <input type="number" name="cuposDisponibles" class="form-control"
+               value="<?= htmlspecialchars((string)($paquete['cuposDisponibles'] ?? $paquete['CuposDisponibles'] ?? '')) ?>" required>
+      </div>
 
-        <label>ID Guía:</label><br>
-        <input type="number" name="idGuia" value="<?= htmlspecialchars($paquete['idGuia'] ?? '') ?>">
-        <br><br>
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">ID Guía:</label>
+        <input type="number" name="idGuia" class="form-control"
+               value="<?= htmlspecialchars((string)($paquete['idGuia'] ?? '')) ?>">
+      </div>
 
-        <label>ID Hotel:</label><br>
-        <input type="number" name="paquete_hotel" value="<?= htmlspecialchars($paquete['paquete_hotel'] ?? '') ?>">
-        <br><br>
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">ID Hotel:</label>
+        <input type="number" name="paquete_hotel" class="form-control"
+               value="<?= htmlspecialchars((string)($paquete['paquete_hotel'] ?? '')) ?>">
+      </div>
 
-        <label>ID Transporte:</label><br>
-        <input type="number" name="paquete_transporte" value="<?= htmlspecialchars($paquete['paquete_transporte'] ?? '') ?>">
-        <br><br>
+      <div class="col-md-6">
+        <label class="form-label fw-semibold">ID Transporte:</label>
+        <input type="number" name="paquete_transporte" class="form-control"
+               value="<?= htmlspecialchars((string)($paquete['paquete_transporte'] ?? '')) ?>">
+      </div>
+    </div>
 
-        <button type="submit">Actualizar Paquete</button>
-        <a href="/agencia-turismo/public/paquete">Cancelar</a>
-    </form>
-</body>
-</html>
+    <div class="d-flex gap-2 mt-4 pt-2">
+      <button type="submit" class="btn btn-primary">
+        <i class="bi bi-check2-square me-1"></i> Actualizar Paquete
+      </button>
+      <a href="/agencia-turismo/public/paquete" class="btn btn-outline-secondary">
+        Cancelar
+      </a>
+    </div>
+  </form>
+</div>
 
 

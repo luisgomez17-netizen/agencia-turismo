@@ -17,8 +17,9 @@ require_once __DIR__ . '/../app/controllers/TipoSangreController.php';
 require_once __DIR__ . '/../app/controllers/TipoTransporteController.php';
 require_once __DIR__ . '/../app/controllers/TransporteController.php';
 require_once __DIR__ . '/../app/controllers/VentaController.php';
+require_once __DIR__ . '/../app/controllers/HomeController.php';
 
-$rutas = require_once dirname(__DIR__) . "/rutas/web.php";
+$rutas = require_once dirname(__DIR__) . '/rutas/web.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
@@ -30,6 +31,9 @@ if ($basePath !== '/' && $basePath !== '' && strpos($ruta, $basePath) === 0) {
     $ruta = substr($ruta, strlen($basePath));
 }
 $ruta = '/' . trim($ruta, '/');
+if ($ruta !== '/') {
+    $ruta = rtrim($ruta, '/');
+}
 
 $enrutamiento = $rutas[$method][$ruta] ?? null;
 
@@ -37,9 +41,12 @@ if ($enrutamiento) {
     $controladorNombre = $enrutamiento[0];
     $accion = $enrutamiento[1];
 
-    $controlador = new $controladorNombre();
-    $controlador->$accion();
-} else {
-    http_response_code(404);
-    echo "Ruta no encontrada";
+    if (class_exists($controladorNombre)) {
+        $controlador = new $controladorNombre();
+        $controlador->$accion();
+        exit();
+    }
 }
+
+http_response_code(404);
+echo 'Ruta no encontrada o controlador pendiente.';

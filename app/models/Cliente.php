@@ -2,15 +2,18 @@
 
 require_once __DIR__ . '/../../config/database.php';
 
-class Cliente {
+class Cliente
+{
     private $db;
 
-    public function __construct() {
+    public function __construct()
+    {
         $database = new Database();
         $this->db = $database->connect();
     }
 
-    public function getAll() {
+    public function getAll()
+    {
         try {
             $sql = "SELECT * FROM cliente";
             $stmt = $this->db->prepare($sql);
@@ -22,21 +25,76 @@ class Cliente {
         }
     }
 
-    public function crear($nombre, $apellido, $idTipoDoc, $numDoc, $correo, $telefono, $direccion, $idCiudad) {
+    public function crear($nombre, $apellido, $idTipoDoc, $numDoc, $correo, $telefono, $direccion, $idCiudad)
+    {
         try {
-            $sql = "INSERT INTO cliente (nombre, apellido, idTipoDoc, numDoc, correo, telefono, direccion, idCiudad) 
+            $sql = "INSERT INTO cliente (nombre, apellido, idTipoDoc, numDoc, correo, telefono, direccion, idCiudad)
                     VALUES (:nombre, :apellido, :idTipoDoc, :numDoc, :correo, :telefono, :direccion, :idCiudad)";
             $stmt = $this->db->prepare($sql);
 
             $stmt->bindValue(':nombre', $nombre, PDO::PARAM_STR);
             $stmt->bindValue(':apellido', $apellido, PDO::PARAM_STR);
-            $stmt->bindValue(':idTipoDoc', !empty($idTipoDoc) ? $idTipoDoc : null, !empty($idTipoDoc) ? PDO::PARAM_INT : PDO::PARAM_NULL);
+            $stmt->bindValue(':idTipoDoc', !empty($idTipoDoc) ? (int) $idTipoDoc : null, !empty($idTipoDoc) ? PDO::PARAM_INT : PDO::PARAM_NULL);
             $stmt->bindValue(':numDoc', $numDoc, PDO::PARAM_STR);
             $stmt->bindValue(':correo', $correo, PDO::PARAM_STR);
             $stmt->bindValue(':telefono', $telefono, PDO::PARAM_STR);
             $stmt->bindValue(':direccion', $direccion, PDO::PARAM_STR);
-            $stmt->bindValue(':idCiudad', !empty($idCiudad) ? $idCiudad : null, !empty($idCiudad) ? PDO::PARAM_INT : PDO::PARAM_NULL);
+            $stmt->bindValue(':idCiudad', !empty($idCiudad) ? (int) $idCiudad : null, !empty($idCiudad) ? PDO::PARAM_INT : PDO::PARAM_NULL);
 
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            echo "<h1>Error de Base de Datos:</h1> " . $e->getMessage();
+            exit();
+        }
+    }
+
+    public function obtenerPorId($id)
+    {
+        $sql = "SELECT * FROM cliente WHERE idCliente = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':id', (int) $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function actualizar($id, $nombre, $apellido, $idTipoDoc, $numDoc, $correo, $telefono, $direccion, $idCiudad)
+    {
+        try {
+            $sql = "UPDATE cliente
+                    SET nombre = :nombre,
+                        apellido = :apellido,
+                        idTipoDoc = :idTipoDoc,
+                        numDoc = :numDoc,
+                        correo = :correo,
+                        telefono = :telefono,
+                        direccion = :direccion,
+                        idCiudad = :idCiudad
+                    WHERE idCliente = :id";
+
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindValue(':id', (int) $id, PDO::PARAM_INT);
+            $stmt->bindValue(':nombre', $nombre, PDO::PARAM_STR);
+            $stmt->bindValue(':apellido', $apellido, PDO::PARAM_STR);
+            $stmt->bindValue(':idTipoDoc', !empty($idTipoDoc) ? (int) $idTipoDoc : null, !empty($idTipoDoc) ? PDO::PARAM_INT : PDO::PARAM_NULL);
+            $stmt->bindValue(':numDoc', $numDoc, PDO::PARAM_STR);
+            $stmt->bindValue(':correo', $correo, PDO::PARAM_STR);
+            $stmt->bindValue(':telefono', $telefono, PDO::PARAM_STR);
+            $stmt->bindValue(':direccion', $direccion, PDO::PARAM_STR);
+            $stmt->bindValue(':idCiudad', !empty($idCiudad) ? (int) $idCiudad : null, !empty($idCiudad) ? PDO::PARAM_INT : PDO::PARAM_NULL);
+
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            echo "<h1>Error de Base de Datos:</h1> " . $e->getMessage();
+            exit();
+        }
+    }
+
+    public function eliminar($id)
+    {
+        try {
+            $sql = "DELETE FROM cliente WHERE idCliente = :id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindValue(':id', (int) $id, PDO::PARAM_INT);
             return $stmt->execute();
         } catch (PDOException $e) {
             echo "<h1>Error de Base de Datos:</h1> " . $e->getMessage();

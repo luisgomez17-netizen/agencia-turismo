@@ -1,21 +1,28 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Eliminar Paquete</title>
-</head>
-<body>
-    <h2>Confirmar Eliminación</h2>
+<?php
+$idMostrar = $paquete['idPaquete'] ?? ($_GET['id'] ?? '');
+$nombrePaquete = $paquete['Nombre'] ?? ('#' . $idMostrar);
+?>
 
-    <p>
-        ¿Seguro que deseas eliminar el paquete
-        <strong><?= htmlspecialchars($paquete['Nombre'] ?? ('#' . ($_GET['id'] ?? ''))) ?></strong>?
-    </p>
+<div class="app-card p-4">
+  <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+    <h2 class="h4 fw-bold text-danger mb-0">Confirmar Eliminación</h2>
+    <a href="/agencia-turismo/public/paquete" class="btn btn-secondary btn-sm">
+      <i class="bi bi-arrow-left me-1"></i> Cancelar
+    </a>
+  </div>
 
-    <form action="/agencia-turismo/public/paquete/eliminar" method="POST">
-        <input type="hidden" name="idPaquete" value="<?= htmlspecialchars($paquete['idPaquete'] ?? ($_GET['id'] ?? '')) ?>">
-        <button type="submit">Sí, Eliminar</button>
-        <a href="/agencia-turismo/public/paquete">Cancelar</a>
-    </form>
-</body>
-</html>
+  <p class="mb-4">
+    ¿Seguro que deseas eliminar el paquete
+    <strong><?= htmlspecialchars((string)$nombrePaquete) ?></strong>? Esta acción no se puede deshacer.
+  </p>
+
+  <form action="/agencia-turismo/public/paquete/eliminar" method="POST" class="d-flex gap-2">
+    <input type="hidden" name="id" value="<?= htmlspecialchars((string)$idMostrar) ?>">
+    <button type="submit" class="btn btn-danger">
+      <i class="bi bi-trash me-1"></i> Sí, Eliminar
+    </button>
+    <a href="/agencia-turismo/public/paquete" class="btn btn-outline-secondary">
+      Cancelar
+    </a>
+  </form>
+</div>
